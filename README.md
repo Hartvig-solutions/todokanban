@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <a href="https://marketplace.visualstudio.com/items?itemName=HartvigSolutions.todokanban"><img src="https://img.shields.io/visual-studio-marketplace/v/HartvigSolutions.todokanban?style=flat-square&color=blue" alt="VS Code Marketplace"></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=hartvig-solutions.todokanban"><img src="https://img.shields.io/visual-studio-marketplace/v/hartvig-solutions.todokanban?style=flat-square&color=blue" alt="VS Code Marketplace"></a>
   <a href="https://github.com/Hartvig-solutions/todokanban/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat-square" alt="License: MIT"></a>
 </p>
 
