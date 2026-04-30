@@ -2,7 +2,7 @@
   "name": "todokanban",
   "displayName": "ToDoKanban",
   "description": "Visual Kanban board for inline workspace TODOs.",
-  "publisher": "hartvigsolutions",
+  "publisher": "hartvig-solutions",
   "author": "Hartvig Solutions",
   "version": "0.0.1",
   "icon": "images/icon.png",
