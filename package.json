@@ -1,0 +1,128 @@
+{
+  "name": "todokanban",
+  "displayName": "ToDoKanban",
+  "description": "Visual Kanban board for inline workspace TODOs.",
+  "publisher": "hartvigsolutions",
+  "author": "Hartvig Solutions",
+  "version": "0.0.1",
+  "icon": "images/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hartvig-solutions/todokanban"
+  },
+  "keywords": [
+    "kanban",
+    "todo",
+    "productivity",
+    "project management",
+    "comments"
+  ],
+  "engines": {
+    "vscode": "^1.118.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "todokanban.showBoard",
+        "title": "ToDoKanban: Show Board",
+        "icon": "$(layout-sidebar-right)"
+      },
+      {
+        "command": "todokanban.openFile",
+        "title": "ToDoKanban: Open File"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "todoKanbanContainer",
+          "title": "ToDo Kanban",
+          "icon": "$(project)"
+        }
+      ]
+    },
+    "views": {
+      "todoKanbanContainer": [
+        {
+          "id": "todoKanban.welcomeView",
+          "name": "Tasks",
+          "icon": "$(checklist)"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "todoKanban.welcomeView",
+        "contents": "No TODO tasks found.\n\n[Open Kanban Board](command:todokanban.showBoard)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "todokanban.showBoard",
+          "when": "view == todoKanban.welcomeView",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "ToDoKanban",
+      "properties": {
+        "todokanban.columns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the Kanban column."
+              },
+              "keywords": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Keywords that map to this column."
+              }
+            }
+          },
+          "default": [
+            { "name": "To Do", "keywords": ["TODO", "FIXME"] },
+            { "name": "In Progress", "keywords": ["IN PROGRESS", "DOING"] },
+            { "name": "Done", "keywords": ["DONE"] }
+          ],
+          "description": "Configure the Kanban columns and their associated keywords."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.118.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "typescript-eslint": "^8.56.1",
+    "eslint": "^9.39.3",
+    "typescript": "^5.9.3",
+    "ts-loader": "^9.5.4",
+    "webpack": "^5.105.3",
+    "webpack-cli": "^6.0.1",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}
