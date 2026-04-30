@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/microsoft/vscode-icons/main/icons/dark/checklist.svg" width="64" alt="ToDoKanban Logo"><br/>
+  <img src="images/icon.png" width="64" alt="ToDoKanban Logo"><br/>
   ToDoKanban
 </h1>
 
