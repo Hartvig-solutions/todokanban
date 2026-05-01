@@ -47,6 +47,73 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(openFileDisposable);
 
+	// Register addAIRules command
+	const aiRulesDisposable = vscode.commands.registerCommand('todokanban.addAIRules', async () => {
+		if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length === 0) {
+			vscode.window.showErrorMessage('No workspace is open.');
+			return;
+		}
+
+		const aiRulesText = `\n\n# ToDoKanban Rules\nWhen adding TODOs, FIXMEs, or tasks in code comments, ALWAYS use the ToDoKanban syntax:\n\`// KEYWORD {MoSCoW} [label1, label2] (Priority): Message\`\n- KEYWORD: TODO, FIXME, IN PROGRESS, or DONE\n- MoSCoW: {S} (Should), {M} (Must), {C} (Could), {W} (Won't)\n- Labels: Comma separated in brackets [ui, bug]\n- Priority: (H) High, (M) Medium, (L) Low\nExample: // TODO {M} [backend, api] (H): Implement user login\n`;
+
+		const pathsToCheck = ['.cursorrules', '.clinerules', 'CLAUDE.md', '.github/copilot-instructions.md'];
+		let filesFound = false;
+		let rulesAdded = false;
+
+		for (const relativePath of pathsToCheck) {
+			const fileUri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, ...relativePath.split('/'));
+			try {
+				const data = await vscode.workspace.fs.readFile(fileUri);
+				filesFound = true;
+				const content = Buffer.from(data).toString('utf8');
+				if (!content.includes('ToDoKanban Rules')) {
+					const newContent = content + aiRulesText;
+					await vscode.workspace.fs.writeFile(fileUri, Buffer.from(newContent, 'utf8'));
+					rulesAdded = true;
+				}
+			} catch (e) {
+				// File does not exist
+			}
+		}
+
+		if (rulesAdded) {
+			vscode.window.showInformationMessage('ToDoKanban AI rules appended to your existing AI configuration files!');
+		} else if (filesFound) {
+			vscode.window.showInformationMessage('ToDoKanban AI rules are already present in your AI configuration files.');
+		} else {
+			const createNew = await vscode.window.showQuickPick([
+				'Cursor (.cursorrules)', 
+				'Copilot (.github/copilot-instructions.md)', 
+				'Claude (CLAUDE.md)',
+				'Custom...'
+			], { placeHolder: 'No existing AI rule files found. Choose which one to create:' });
+
+			let targetPath = '';
+			if (createNew === 'Cursor (.cursorrules)') targetPath = '.cursorrules';
+			else if (createNew === 'Copilot (.github/copilot-instructions.md)') targetPath = '.github/copilot-instructions.md';
+			else if (createNew === 'Claude (CLAUDE.md)') targetPath = 'CLAUDE.md';
+			else if (createNew === 'Custom...') {
+				const customPath = await vscode.window.showInputBox({ prompt: 'Enter the filename or path (e.g. .ai-rules.md)' });
+				if (customPath) targetPath = customPath;
+			}
+
+			if (targetPath) {
+				const fileUri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, ...targetPath.split('/'));
+				
+				// Ensure directory exists if it's a nested path like .github/copilot
+				if (targetPath.includes('/')) {
+					const dirPath = targetPath.substring(0, targetPath.lastIndexOf('/'));
+					const dirUri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, ...dirPath.split('/'));
+					try { await vscode.workspace.fs.createDirectory(dirUri); } catch (e) {} // Ignore if exists
+				}
+				
+				await vscode.workspace.fs.writeFile(fileUri, Buffer.from(aiRulesText.trim(), 'utf8'));
+				vscode.window.showInformationMessage(`Created ${targetPath} with ToDoKanban AI syntax rules!`);
+			}
+		}
+	});
+	context.subscriptions.push(aiRulesDisposable);
+
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json

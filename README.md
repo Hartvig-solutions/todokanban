@@ -39,6 +39,24 @@ Instead of searching through your files for `// TODO:` or `// FIXME:`, ToDoKanba
 4. Click the **Open Kanban Board** button at the top of the sidebar.
 5. **Drag and drop** tasks across columns and watch your source code magically update itself!
 
+## 🤖 AI Assistant Integration
+
+Using an AI coding assistant like **Cursor, Windsurf, GitHub Copilot, or Claude**? 
+You can run the command `ToDoKanban: Inject AI Syntax Rules` from the VS Code Command Palette to automatically generate the required instructions for your AI!
+
+Alternatively, you can manually copy-paste this prompt into your AI's custom instructions or `.cursorrules` file:
+
+```markdown
+# ToDoKanban Rules
+When adding TODOs, FIXMEs, or tasks in code comments, ALWAYS use the ToDoKanban syntax:
+`// KEYWORD {MoSCoW} [label1, label2] (Priority): Message`
+- KEYWORD: TODO, FIXME, IN PROGRESS, or DONE
+- MoSCoW: {S} (Should), {M} (Must), {C} (Could), {W} (Won't)
+- Labels: Comma separated in brackets [ui, bug]
+- Priority: (H) High, (M) Medium, (L) Low
+Example: // TODO {M} [backend, api] (H): Implement user login
+```
+
 ## ⚙️ Configuration
 
 ToDoKanban is highly flexible. You can customize the Kanban columns and the exact keywords they listen for by modifying your `settings.json`.
