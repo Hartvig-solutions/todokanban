@@ -12,7 +12,7 @@ function getNonce() {
 export function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.Uri): string {
     const nonce = getNonce();
 
-    // IN PROGRESS {M} [refactor, html] (H): Refactoring this huge HTML string into a separate HTML file.
+    // TODO {M} [refactor, html] (H): Refactoring this huge HTML string into a separate HTML file.
     // TODO {W} [ui, config] (L): Add support for custom CSS themes passed from user settings.
     return `<!DOCTYPE html>
     <html lang="en">
