@@ -5,6 +5,17 @@ All notable changes to the "ToDoKanban" extension will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.3] - 2026-05-02
+
+### Added
+- **AI Assistant Integration:** New command `ToDoKanban: Inject AI Syntax Rules` to automatically configure AI rules for Cursor, Claude, Copilot, and more.
+- **Open VSX Support:** Extension is now available on the [Open VSX Registry](https://open-vsx.org/).
+- **Automated CI/CD:** Implemented GitHub Actions for seamless automated testing and publishing to both marketplaces.
+
+### Changed
+- **Codebase Standardization:** Migrated all internal comments, logging, and documentation to English for better maintainability and accessibility.
+- **Improved Navigation:** Enhanced "One-Click Navigation" logic to better handle cross-file jumping from both the board and the sidebar.
+
 ## [0.0.2] - 2026-04-30
 
 ### Fixed
