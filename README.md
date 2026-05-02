@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="images/icon.png" width="64" alt="ToDoKanban Logo"><br/>
+  <img src="images/icon.png" width="96" alt="ToDoKanban Logo"><br/>
   ToDoKanban
 </h1>
 
@@ -8,8 +8,14 @@
 </p>
 
 <p align="center">
-  <a href="https://marketplace.visualstudio.com/items?itemName=hartvig-solutions.todokanban"><img src="https://img.shields.io/visual-studio-marketplace/v/hartvig-solutions.todokanban?style=flat-square&color=blue" alt="VS Code Marketplace"></a>
-  <a href="https://github.com/Hartvig-solutions/todokanban/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat-square" alt="License: MIT"></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=hartvig-solutions.todokanban"><img src="https://img.shields.io/badge/VS%20Marketplace-Available-007ACC?style=for-the-badge&logo=visual-studio-code" alt="VS Code Marketplace"></a>
+  <a href="https://open-vsx.org/extension/hartvig-solutions/todokanban"><img src="https://img.shields.io/open-vsx/v/hartvig-solutions/todokanban?style=for-the-badge&logo=open-vsx&color=662D91&label=Open%20VSX" alt="Open VSX"></a>
+  <a href="https://github.com/Hartvig-solutions/todokanban/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge" alt="License: MIT"></a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/v/release/Hartvig-solutions/todokanban?display_name=tag&style=flat-square&color=orange&label=Latest%20Version" alt="Latest Release">
+  <img src="https://img.shields.io/open-vsx/dt/hartvig-solutions/todokanban?style=flat-square&color=blueviolet&label=Downloads" alt="Open VSX Downloads">
 </p>
 
 ---
