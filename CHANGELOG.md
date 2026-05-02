@@ -5,6 +5,17 @@ All notable changes to the "ToDoKanban" extension will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.0] - 2026-05-02
+
+### Added
+- **Expanded Scanner Support:** Now finds tasks in `.md`, `.todo`, `.yml`, `.yaml`, and `.json` files.
+- **Smart Formatting:** The extension now preserves the original comment style (e.g., `#`, `//`, `<!--`) when moving tasks on the board.
+- **Middle-of-line Detection:** Can now find tasks even if they are not at the start of a comment or line.
+- **Project-Specific TODOs:** Prioritizes scanning of `TODO.md` and `.todo` files as central task hubs.
+
+### Fixed
+- **Compatibility:** Lowered minimum required VS Code engine version to `1.100.0` to support Antigravity, Cursor, and older VS Code versions.
+
 ## [0.0.3] - 2026-05-02
 
 ### Added
