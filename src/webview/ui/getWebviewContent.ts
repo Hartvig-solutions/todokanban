@@ -221,6 +221,7 @@ export function getWebviewContent(webview: vscode.Webview, extensionUri: vscode.
                                     filePath: task.filePath,
                                     line: task.line,
                                     oldKeyword: task.keyword,
+                                    originalPrefix: task.originalPrefix,
                                     newColumn: targetColumnName
                                 }
                             });

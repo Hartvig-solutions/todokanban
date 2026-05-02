@@ -159,7 +159,7 @@ export function activate(context: vscode.ExtensionContext) {
 					});
 				});
 			} else if (message.command === 'moveTask') {
-				const { filePath, line, newColumn, oldKeyword } = message.payload;
+				const { filePath, line, newColumn, oldKeyword, originalPrefix } = message.payload;
 				const currentColumns = getColumnsConfig();
 				const targetCol = currentColumns.find(c => c.name === newColumn);
 				
@@ -171,10 +171,13 @@ export function activate(context: vscode.ExtensionContext) {
 						const document = await vscode.workspace.openTextDocument(uri);
 						const lineText = document.lineAt(line).text;
 						
-						// Replace the old keyword with the new keyword (case-insensitive replace of the first occurrence)
-						// We need a regex to match the old keyword specifically (accounting for // and spacing)
-						// Example: // TODO: -> // IN PROGRESS:
-						const keywordRegex = new RegExp(`(\\/\\/\\s*)${oldKeyword}`, 'i');
+						// Escape special characters in the prefix and keyword for the regex
+						const escapedPrefix = originalPrefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+						const escapedKeyword = oldKeyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+						
+						// Replace the old keyword while preserving the original prefix
+						// We use a regex that matches the prefix exactly as it was found
+						const keywordRegex = new RegExp(`(${escapedPrefix}\\s*)${escapedKeyword}`, 'i');
 						const newLineText = lineText.replace(keywordRegex, `$1${newKeyword}`);
 						
 						if (newLineText !== lineText) {

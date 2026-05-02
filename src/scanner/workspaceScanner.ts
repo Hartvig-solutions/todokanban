@@ -26,12 +26,13 @@ function buildCommentRegex(keywords: string[]): RegExp {
     const keywordGroup = keywords.join('|');
     
     return new RegExp(
-        `\\/\\/\\s*(?<keyword>${keywordGroup})` +      // Match '//' + spacing + Keyword
-        `(?:\\s*\\{(?<moscow>[a-zA-Z])\\})?` +         // Optional {MoSCoW}
-        `(?:\\s*\\[(?<labels>[^\\]]+)\\])?` +          // Optional [label1, label2]
-        `(?:\\s*\\((?<priority>[a-zA-Z])\\))?` +       // Optional (Priority)
-        `(?:\\s*:)?\\s*` +                             // Optional colon followed by spacing
-        `(?<message>.*)`,                              // The rest is the message
+        `(?<prefix>//|#|<!--|/\\*|^\\s*-?\\s*|^\\s*|\\s+)\\s*` + // Added |\\s+ for middle-of-line support
+        `(?<keyword>${keywordGroup})` +                 // Match Keyword
+        `(?:\\s*\\{(?<moscow>[a-zA-Z])\\})?` +          // Optional {MoSCoW}
+        `(?:\\s*\\[(?<labels>[^\\]]+)\\])?` +           // Optional [label1, label2]
+        `(?:\\s*\\((?<priority>[a-zA-Z])\\))?` +        // Optional (Priority)
+        `(?:\\s*:)?\\s*` +                              // Optional colon followed by spacing
+        `(?<message>.*)`,                               // The rest is the message
         'ig'                                           // Case-insensitive, global matching
     );
 }
@@ -61,8 +62,8 @@ export async function scanWorkspaceForTasks(): Promise<TodoTask[]> {
 
     // Find files, ignoring node_modules and common build folders
     const files = await vscode.workspace.findFiles(
-        '**/*.{ts,js,jsx,tsx,html,css}', // Adjust extensions based on target languages
-        '**/{node_modules,dist,out,build}/**'
+        '**/*.{ts,js,jsx,tsx,html,css,md,todo,yml,yaml,json}', // Expanded extensions
+        '**/{node_modules,dist,out,build,CHANGELOG.md,README.md}/**' // Exclude some docs
     );
 
     for (const uri of files) {
@@ -95,6 +96,7 @@ export async function scanWorkspaceForTasks(): Promise<TodoTask[]> {
                         moscow: moscow?.toUpperCase(),
                         labels: parsedLabels,
                         priority: priority?.toUpperCase(),
+                        originalPrefix: match.groups.prefix || '', // Store the captured prefix
                         message: message.trim(),
                         filePath: uri.fsPath,
                         line: i
